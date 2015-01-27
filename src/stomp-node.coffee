@@ -61,6 +61,7 @@ wrapWS = (url) ->
   }
 
   socket = new WebSocketClient()
+
   socket.on 'connect', (conn) ->
     connection = conn
     ws.onopen()
@@ -72,6 +73,9 @@ wrapWS = (url) ->
           'data': message.utf8Data
         }
         ws.onmessage(event)
+
+  socket.on 'connectFailed', (error) ->
+      throw error
 
   socket.connect url
   return ws
